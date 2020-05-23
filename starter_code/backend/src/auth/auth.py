@@ -16,7 +16,7 @@ API_AUDIENCE = 'coffee_shop_auth_api'
 # ALGORITHMS = ['RS256']
 # API_AUDIENCE = environ.get('API_AUDIENCE', 'coffee_shop_auth_api')
 
-# AuthError Exception
+
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
@@ -31,31 +31,24 @@ class AuthError(Exception):
 
 # Auth Header
 
-'''
-@TODO implement get_token_auth_header() method
-    it should attempt to get the header from the request
-        it should raise an AuthError if no header is present
-    it should attempt to split bearer and the token
-        it should raise an AuthError if the header is malformed
-    return the token part of the header
-'''
-
-
 def get_token_auth_header():
     '''
     Obtain the access token from the authorization header
     '''
-
+    #attempt to get the header from the request
     auth = request.headers.get('Authorization', None)
 
+    #raise an AuthError if no header is present
     if not auth:
         raise AuthError({
             'code': 'authorization_header_missing',
             'description': 'Authorization header is expected.'
                 }, 401)
 
+    #attempt to split bearer and the token
     parts = auth.split()
 
+    #raise an AuthError if the header is malformed return the token part of the header
     if parts[0].lower() != 'bearer':
         raise AuthError({
             'code': 'invalid_header',
@@ -72,29 +65,26 @@ def get_token_auth_header():
     return token
 
 
-'''
-@TODO implement check_permissions(permission, payload) method
-    @INPUTS
+def check_permissions(permission, payload):
+    '''
+    Function for authenticating permission of the user
+    input:
         permission: string permission (i.e. 'post:drink')
         payload: decoded jwt payload
 
-    it should raise an AuthError if permissions are not included in the payload
-        !!NOTE check your RBAC settings in Auth0
-    it should raise an AuthError if the requested permission string is not in the payload permissions array
-    return true otherwise
-'''
+    returns:
+        Boolean (True)
+    '''
 
-
-def check_permissions(permission, payload):
-    '''Function for authenticating permission of the user'''
-
+    #raises an AuthError if permissions are not included in the payload
     if 'permissions' not in payload:
         
         raise AuthError({
             'code': 'invalid_claims',
             'description': 'Permissions not included in JWT'
         }, 400)
-        
+
+    #raise an AuthError if the requested permission string is not in the payload permissions array return true otherwise    
     if permission not in payload['permissions']:
         
         raise AuthError({
@@ -107,7 +97,7 @@ def check_permissions(permission, payload):
 
 def get_rsa_key(token):
     '''Checks jwks for an rsa key using a key ID in the token header.
-    Args:
+    input:
         token (str):  The token string
     Returns:
         dict: The rsa key.
@@ -150,7 +140,7 @@ def get_rsa_key(token):
 
 def verify_decode_jwt(token):
     '''Verifies and decodes the JWT token.
-    Args:
+    input:
         token (str):  The token string
     Returns:
         dict: The token payload.

@@ -7,3 +7,55 @@ ayotomiwasalau@gmail.com
 
 https://coffeeshopauth.auth0.com/authorize?audience=coffee_shop_auth_api&scope=SCOPE&response_type=token&client_id=n8FXp2QxcFIhvZg2QgZ2qz0q9JeUhMbO&redirect_uri=https://127.0.0.1:5000/drinks&state=STATE
 
+#!!NOTE urlopen has a common certificate error described here https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-verify-failed-error-for-http-en-wikipedia-org
+
+
+'''
+@TODO implement verify_decode_jwt(token) method
+    @INPUTS
+        token: a json web token (string)
+
+    it should be an Auth0 token with key id (kid)
+    it should verify the token using Auth0 /.well-known/jwks.json
+    it should decode the payload from the token
+    it should validate the claims
+    return the decoded payload
+'''
+
+'''
+implement @requires_auth(permission) decorator method
+    @INPUTS
+        permission: string permission (i.e. 'post:drink')
+
+    it should use the get_token_auth_header method to get the token
+    it should use the verify_decode_jwt method to decode the jwt
+    it should use the check_permissions method validate claims and check the requested permission
+    return the decorator which passes the decoded payload to the decorated method
+'''
+
+NPvYvSxUvGbtDZjvRSdRf
+
+{"keys":[{"alg":"RS256","kty":"RSA","use":"sig","n":"qf20JsMfVyG_jk7ajGtAFUbZhohNkL5_EGXLeApvgPm7UcBYk97fXCrgUzI2gaZiSHuFY0adFEsYJZfDQO_2Q7-dJ
+VkJEPJIGAG8lW9WS3UnC3KN4vzS-tSfR2nE7QzBUaEv-gSwSckg0Np1AmDlG9cVy34JamGIGNS2TzUBalIoZ849RosIjDWSzDWbhPfsDHVc-mF080LKodN6Ez9SQIAuOGT0O10A7tRBUiOV
+CDkDfTBI8Ik9gi1vfo_Dup71Kd0MlQ7-VIj1MwuquyLYoLouVW-raoQI39dPGUN2XmntyNS0VHWnYWPjyWn4RSvyaWj4spmclSt8zYFtCfU1Qw","e":"AQAB","kid":"NPvYvSxUvGbtDZ
+jvRSdRf","x5t":"KV2m8ThccszvAX6rUhbf7yeXjDI","x5c":["MIIDCzCCAfOgAwIBAgIJB5WcuJjmSGRXMA0GCSqGSIb3DQEBCwUAMCMxITAfBgNVBAMTGGNvZmZlZXNob3BhdXRoLmF1d
+GgwLmNvbTAeFw0yMDA1MTkwODMwMTBaFw0zNDAxMjYwODMwMTBaMCMxITAfBgNVBAMTGGNvZmZlZXNob3BhdXRoLmF1dGgwLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKn9tC
+bDH1chv45O2oxrQBVG2YaITZC+fxBly3gKb4D5u1HAWJPe31wq4FMyNoGmYkh7hWNGnRRLGCWXw0Dv9kO/nSVZCRDySBgBvJVvVkt1JwtyjeL80vrUn0dpxO0MwVGhL/oEsEnJINDadQJg5RvX
+Fct+CWphiBjUtk81AWpSKGfOPUaLCIw1ksw1m4T37Ax1XPphdPNCyqHTehM/UkCALjhk9DtdAO7UQVIjlQg5A30wSPCJPYItb36Pw7qe9SndDJUO/lSI9TMLqrsi2KC6LlVvq2
+qECN/XTxlDdl5p7cjUtFR1p2Fj48lp+EUr8mlo+LKZnJUrfM2BbQn1NUMCAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUO/EwsTERHY2olooJ3yDw2vZVvk0wDgYDVR0PAQH
+/BAQDAgKEMA0GCSqGSIb3DQEBCwUAA4IBAQA7hBUOZIeetdhleZOAf8Qg8scLMFziP7VRzMe21+ceC5+BhCiVroEaOzpCf67eag7XemqWmEcTZYw9Kyp/WTAs3obK8uJwtLsug3MAB7WC+3pSn
+S1IUqnkfUY7tMbjbSmFnIZn21vN01sW/O9EI1Z4CeZj9lz6TWoXeBord53M0GFsdnAPrjqaQYEwzs8qlnQAfF48RM/4+HVXpeT7hieb11q7Ui3x8bPneKaRjEEShQJBm4TfRVdmXhk8RRXgq/xm
+vljKGQH3KkKmOKUXxf4veg2mFQnzW9zG8nUj5pP/kxSZU7YD/5xT9KxWibUfgLOoWUGPa+FMINo9P4sWgvcI"]},{"alg":"RS256","kty":"RSA","use":"sig","n":"rLlUyYEZCU_TFQ9ai
+zDHPIjWwuTXEgZSXGHxv3fm3UI1KAgl0lQ14qg0POPXuT7NItXGSx5zbrXrhi57Di2sZyyD3ZNLpIXVXKNA5wndqubzlQkG4gKfu8Xiq81KZYy96RIW3eR0dn7kiL1VZowBB2N-0qhvXgIIRozRPGs3W
+cYpY3ezbcT1VIEP2HpO7_8DGVk7MnK9AIgH2QbPILpbotiXXrJ7fStIuD-NWPtSJ_vI54aMSkKJ5WL4CGk7aiwuTbQswv4EOuNGZ6lX9x1CkraH8L7V2keZoFilnaqO87hiWfv3gcRvG1G7aYIMK_A
+3OSjmCWWvop6IlZ4VT0H-7Q","e":"AQAB","kid":"pfKA2U_PRerTLyX3wIaY7","x5t":"q7ol0XxZ0jYDyu-uW89bciMp0DI","x5c":["MIIDCzCCAfOgAwIBAgIJAy6j60H3fBfmMA0GCSqG
+SIb3DQEBCwUAMCMxITAfBgNVBAMTGGNvZmZlZXNob3BhdXRoLmF1dGgwLmNvbTAeFw0yMDA1MTkwODMwMTBaFw0zNDAxMjYwODMwMTBaMCMxITAfBgNVBAMTGGNvZmZlZXNob3BhdXRoLmF1dGgwLmNvb
+TCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKy5VMmBGQlP0xUPWoswxzyI1sLk1xIGUlxh8b935t1CNSgIJdJUNeKoNDzj17k+zSLVxksec26164Yuew4trGcsg92TS6SF1VyjQOcJ3arm8
+5UJBuICn7vF4qvNSmWMvekSFt3kdHZ+5Ii9VWaMAQdjftKob14CCEaM0TxrN1nGKWN3s23E9VSBD9h6Tu//AxlZOzJyvQCIB9kGzyC6W6LYl16ye30rSLg/jVj7Uif7yOeGjEpCieVi+AhpO2osLk20L
+ML+BDrjRmepV/cdQpK2h/C+1dpHmaBYpZ2qjvO4Yln794HEbxtRu2mCDCvwNzko5gllr6KeiJWeFU9B/u0CAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAdBgNVHQ4EFgQUIuDt4FVYjBDJrMca+tHR
+PnwvURcwDgYDVR0PAQH/BAQDAgKEMA0GCSqGSIb3DQEBCwUAA4IBAQCgYW+5wNPlkIcVOzxQATz7KQ2s7y8i4VTVAMORMztjGzVjn89KN3JvGn5yc+jDaIOj9dWg3uC4zfuITboZsJ7mFhY9cDr9264
+8+TiUEZ/5sdsocK9tfG15sdu4y4229dCw6SR80Grm4uFAIJbteTaEt7LRo1bvgGXi8JrNlYNmemhQVulp973aJPhNLCxZC5dD8CPxyrfJQ95BbKW5sjDFAliPA0AB6ZCBs9YgJL96gmvGFZfu12fecd
+EJvB5uj4WJohS9+LV1yaiZB7zaTEGiJLDPo60vL6TUHPI0OAwfKgTWakda/AScBWoCGfAmzGZAVb4A+aUsLZSq1Une0No3"]}]}
+
+
+eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik5Qdll2U3hVdkdidERaanZSU2RSZiJ9.eyJpc3MiOiJodHRwczovL2NvZmZlZXNob3BhdXRoLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZWMzYWZmY2E1MzVhOTBjNjFhNzhmZTUiLCJhdWQiOiJjb2ZmZWVfc2hvcF9hdXRoX2FwaSIsImlhdCI6MTU5MDA3MzM1NCwiZXhwIjoxNTkwMDgwNTU0LCJhenAiOiJuOEZYcDJReGNGSWh2WmcyUWdaMnF6MHE5SmVVaE1iTyIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmRyaW5rcy1kZXRhaWwiXX0.V1aVGl1OIRFfd_G4lU0VnDn27wHBHNcRZN6_acI5Fm53DbdAFUuz4yUdHd4oNHlDLY_iVOYqih5Y7gx5Gbt20LjxSb7G0emV5sawnGjzABn8SqxZf_-0_kvAOTzWCzyF-y3_rvJ15SKbsljVywParENPkS9IgytlCLpxsarzc8cOfdLdoB1VNCpg7elsEk8NTkX5GXT6LR-6LngduCwRMGrFSqIo1XwIZ5NRmxTd84nNMazVvfPNilsGKqJrxhcTTh5dIDsveQjNv72T1Yy_c-vXlt1Y43h5uTYrJUqwRisdp4cq4oW9JDyT3nqVtBGrhKvQdSebpqPDbmI9seKTwg&scope=
