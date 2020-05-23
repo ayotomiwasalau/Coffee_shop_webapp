@@ -30,12 +30,18 @@ def get_drinks():
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
     '''
-    all_drinks = Drink.query.all()
-    return jsonify({
-        "success": True, 
-        "drinks": [drink.short() for drink in all_drinks]
-    })
-
+    try:
+        data = Drink.query.all()
+        
+        if not data:
+            abort(404)
+        drinks = [drink.short() for drink in data]
+        return jsonify({
+                    'success': True,
+                    'drinks': drinks
+                }), 200
+    except exc.SQLAlchemyError:
+        abort(503)
 
 
 @app.route('/drinks-detail')
